@@ -51,3 +51,10 @@ steps:
     ibSubscription: '9bb8e8cc-cb4d-4c56-9aaf-87ca2c80762e'
     ibAzureResourceGroup: 'myVMSSResourceGroup'
     ibLocation: 'eastus2'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: '`9bb8e8cc-cb4d-4c56-9aaf-87ca2c80762e`' #Authorize and in the task editor
+    ScriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    Inline: 'az vmss update --resource-group myVMSSResourceGroup --name myScaleSet --set virtualMachineProfile.storageProfile.imageReference.id=/subscriptions/9bb8e8cc-cb4d-4c56-9aaf-87ca2c80762e/resourceGroups/myVMSSResourceGroup/providers/Microsoft.Compute/galleries/myVMSSGallery/images/MyImage/versions/0.0.$(Build.BuildId)'
