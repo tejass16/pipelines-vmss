@@ -32,22 +32,3 @@ steps:
     TargetFolder: '$(System.DefaultWorkingDirectory)/pipeline-artifacts/'
     flattenFolders: true
 
-- task: AzureImageBuilderTask@1
-  displayName: 'Azure VM Image Builder Task'
-  inputs:
-    managedIdentity: '/subscriptions/9bb8e8cc-cb4d-4c56-9aaf-87ca2c80762e/resourcegroups/myVMSSResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myVMSSIdentity'
-    imageSource: 'marketplace'
-    packagePath: '$(System.DefaultWorkingDirectory)/pipeline-artifacts'
-    inlineScript: |
-      sudo mkdir /lib/buildArtifacts
-      sudo cp  "/tmp/pipeline-artifacts.tar.gz" /lib/buildArtifacts/.
-      cd /lib/buildArtifacts/.
-      sudo tar -zxvf pipeline-artifacts.tar.gz
-      sudo sh install.sh
-    storageAccountName: 'vmssstorageaccount17'
-    distributeType: 'sig'
-    galleryImageId: '/subscriptions/9bb8e8cc-cb4d-4c56-9aaf-87ca2c80762e/resourceGroups/myVMSSResourceGroup/providers/Microsoft.Compute/galleries/myVMSSGallery/images/MyImage/versions/0.0.$(Build.BuildId)'
-    replicationRegions: 'eastus2'
-    ibSubscription: '9bb8e8cc-cb4d-4c56-9aaf-87ca2c80762e'
-    ibAzureResourceGroup: 'myVMSSResourceGroup'
-    ibLocation: 'eastus2'
